@@ -7,12 +7,6 @@ package app;
 
 import View.Menu;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import Model.Item;
-import Model.Produto;
-
 /**
  *
  * @author mathe

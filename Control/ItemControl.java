@@ -11,16 +11,18 @@ import Model.ItemCasa;
 import Model.Livro;
 import Model.Loja;
 import Model.Produto;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
  * @author mathe
  */
 public class ItemControl {
-
-    List<Item> itens = new ArrayList<>();
+    
+    Map<Integer, Item> itens = new HashMap<>();
+    Item item;
     LojaControl lojaControl = new LojaControl();
     ProdutoControl produtoControl = new ProdutoControl();
     String[] dados;
@@ -51,15 +53,16 @@ public class ItemControl {
                 }
             }
             double valor = Double.parseDouble(dados[4].replace(',', '.'));
-            itens.add(new Item(prod, loja, valor));
+            //itens.add(new Item(prod, loja, valor));
+            item = new Item(prod, loja, valor);
+            itens.put(codigo, item);
         }
-        
-        /*Imprimir no menu*/
-        for(int i=0;i<itens.size();i++){
+        item.setItens(itens);
+       /* for(Integer i : itens.keySet()){
             System.out.println("Codigo: "+itens.get(i).getProduto().getCodigo()
             +" - Nome: "+itens.get(i).getProduto().getNome()
             +" - Loja: "+itens.get(i).getLoja().getNome()
             +" - Valor: "+itens.get(i).getValor());
-        }
+        }*/
     }
 }
