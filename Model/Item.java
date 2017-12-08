@@ -1,5 +1,6 @@
 package Model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -9,7 +10,7 @@ public class Item {
     private Loja loja;
     private double valor;
 
-    private static Map<Integer, Item> itens = new HashMap<>();
+    private static Map<Integer, ArrayList<Item>> itens = new HashMap<>();
 
     public Item(){}
     
@@ -19,11 +20,11 @@ public class Item {
         this.valor = valor;
     }
 
-    public Map<Integer, Item> getItens() {
+    public Map<Integer, ArrayList<Item>> getItens() {
         return itens;
     }
 
-    public void setItens(Map<Integer, Item> itens) {
+    public void setItens(Map<Integer, ArrayList<Item>> itens) {
         this.itens = itens;
     }
 
@@ -39,11 +40,19 @@ public class Item {
         return produto;
     }
     
-    public Item buscaCodigo(int codigo){
+    public ArrayList<Item> buscaCodigo(int codigo){
         if(this.itens.containsKey(codigo)){
             return itens.get(codigo);
         }
         return null;
+    }
+    
+    @Override
+    public String toString(){
+        return "["+this.getProduto().getCodigo()+"]"+
+                " Produto: "+this.getProduto().getNome()+
+                " - "+this.getLoja().getNome()+
+                " - R$"+this.getValor()+"\n";
     }
 
 }

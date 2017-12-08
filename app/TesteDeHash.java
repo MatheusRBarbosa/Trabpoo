@@ -5,7 +5,10 @@
  */
 package app;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,25 +18,29 @@ import java.util.Map;
 public class TesteDeHash {
 
     public static void main(String args[]) {
-        Map<Integer, String> ex = new HashMap<>();
-        ex.put(1001, "PROD1");
-        ex.put(1002, "PROD2");
-        ex.put(2002, "produto 3");
-        ex.put(2002, "AAAAA");
+        Map<Integer, List<String>> ex = new HashMap<>();
+        ex.put(1001, Arrays.asList("PROD1iow PROD100", "PROD!IO!@JIO!"));
+        ex.put(1002, Arrays.asList("PROD fwe wwwwwwwww", "PROD!IO!@JIO!"));
+        ex.put(2002, Arrays.asList("PRAAAAAAOD fw BBBBBB", "CCCCCC!IO!@JIO!"));
         
-        int chave = 2002;
+        int chave = 1001;
         String sr = "PROD";
         
+        
         if(ex.containsKey(chave)){
-            System.out.println("Chave: "+ex.get(chave));
+            List<String> exArray = ex.get(chave);
+            for(int i=0;i<exArray.size();i++){
+                System.out.println(exArray.get(i));
+            }
+            //System.out.println("Chave: "+ex.get(chave));
         }
         
-        for(Integer i : ex.keySet()){
+       /* for(Integer i : ex.keySet()){
             if(ex.get(i).contains(sr)){
                 System.out.println("Chave: "+ex.hashCode()+" - Conteudo: "+ex.get(i));
             }
             
-        }
+        }*/
     }
 
 }

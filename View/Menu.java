@@ -15,8 +15,8 @@ import Model.Produto;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 
 /**
@@ -29,7 +29,7 @@ public class Menu extends javax.swing.JFrame {
     Produto produtos;
     ItemControl itemControl;
     Item item;
-    Map<Integer, Item> itens;
+    Map<Integer, ArrayList<Item>> itens;
     private boolean finded = false;
 
     public Menu() {
@@ -62,9 +62,9 @@ public class Menu extends javax.swing.JFrame {
         fileSelect = new javax.swing.JButton();
         textFieldFileName = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        table = new javax.swing.JTable();
         comboBox = new javax.swing.JComboBox<>();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        listItens = new javax.swing.JList<>();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -119,20 +119,9 @@ public class Menu extends javax.swing.JFrame {
 
         jLabel2.setText("Arquivo de texto:");
 
-        table.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
-            },
-            new String [] {
-                "Nome", "Valor", "Loja", "Detalhes 1", "Detalhes 2", "Detalhes 3"
-            }
-        ));
-        jScrollPane3.setViewportView(table);
-
         comboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Codigo", "Nome", "Tipo", "Loja" }));
+
+        jScrollPane1.setViewportView(listItens);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -150,23 +139,24 @@ public class Menu extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 557, Short.MAX_VALUE)
+                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(textFieldBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnBuscar)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnHistorico)))
+                                .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(textFieldBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnBuscar)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                        .addComponent(btnHistorico)
                         .addContainerGap())))
             .addGroup(layout.createSequentialGroup()
                 .addGap(247, 247, 247)
                 .addComponent(btnComprar)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -184,8 +174,8 @@ public class Menu extends javax.swing.JFrame {
                     .addComponent(btnBuscar)
                     .addComponent(btnHistorico)
                     .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52)
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                .addGap(43, 43, 43)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addComponent(btnComprar)
                 .addGap(40, 40, 40))
@@ -232,6 +222,7 @@ public class Menu extends javax.swing.JFrame {
 
         String conteudo = textFieldBusca.getText();
         String cb = (String) comboBox.getSelectedItem();
+        DefaultListModel dlm = new DefaultListModel();
         itens = item.getItens();
 
         if (itens != null) {
@@ -239,47 +230,61 @@ public class Menu extends javax.swing.JFrame {
                 int codigo = Integer.parseInt(conteudo);
                 if (this.itens.containsKey(codigo)) {
                     finded = true;
-                    System.out.println(itens.get(codigo).getProduto().getNome());
+                    for (int j = 0; j < itens.get(codigo).size(); j++) {
+                        dlm.addElement(itens.get(codigo).get(j).toString());
+                    }
+                    listItens.setModel(dlm);
                 }
             } else if (cb.equals("Nome")) {
                 for (Integer i : itens.keySet()) {
-                    if (itens.get(i).getProduto().getNome().toUpperCase().contains(conteudo.toUpperCase())) {
-                        finded = true;
-                        System.out.println(itens.get(i).getProduto().getNome());
+                    for (int j = 0; j < itens.get(i).size(); j++) {
+                        if (itens.get(i).get(j).getProduto().getNome().toUpperCase().contains(conteudo.toUpperCase())) {
+                            finded = true;
+                            dlm.addElement(itens.get(i).get(j).toString());
+                        }
                     }
+                    listItens.setModel(dlm);
                 }
             } else if (cb.equals("Tipo")) {
                 if ("LIVRO".contains(conteudo.toUpperCase())) {
-                    System.out.println("== Voce Procurou por LIVROS ==");
                     for (Integer i : itens.keySet()) {
-                        if (itens.get(i).getProduto() instanceof Livro) {
-                            System.out.println(itens.get(i).getProduto().getNome());
+                        for (int j = 0; j < itens.get(i).size(); j++) {
+                            if (itens.get(i).get(j).getProduto() instanceof Livro) {
+                                dlm.addElement(itens.get(i).get(j).toString());
+                            }
                         }
+                        listItens.setModel(dlm);
                     }
                 } else if ("ELETRONICO".contains(conteudo.toUpperCase())) {
-                    System.out.println("== Voce Procurou por ELETRONICOS ==");
                     for (Integer i : itens.keySet()) {
-                        if (itens.get(i).getProduto() instanceof Eletronico) {
-                            System.out.println(itens.get(i).getProduto().getNome());
+                        for (int j = 0; j < itens.get(i).size(); j++) {
+                            if (itens.get(i).get(j).getProduto() instanceof Eletronico) {
+                                dlm.addElement(itens.get(i).get(j).toString());
+                            }
                         }
+                        listItens.setModel(dlm);
                     }
                 } else if ("ITEMCASA".contains(conteudo.toUpperCase())) {
-                    System.out.println("== Voce Procurou por ITEMCASA ==");
                     for (Integer i : itens.keySet()) {
-                        if (itens.get(i).getProduto() instanceof ItemCasa) {
-                            System.out.println(itens.get(i).getProduto().getNome());
+                        for (int j = 0; j < itens.get(i).size(); j++) {
+                            if (itens.get(i).get(j).getProduto() instanceof ItemCasa) {
+                                dlm.addElement(itens.get(i).get(j).toString());
+                            }
                         }
+                        listItens.setModel(dlm);
                     }
                 }
             } else if (cb.equals("Loja")) {
-                for(Integer i: itens.keySet()){
-                    if(itens.get(i).getLoja().getNome().toUpperCase().contains(conteudo.toUpperCase())){
-                        System.out.println(itens.get(i).getProduto().getNome());
+                for (Integer i : itens.keySet()) {
+                    for (int j = 0; j < itens.get(i).size(); j++) {
+                        if (itens.get(i).get(j).getLoja().getNome().toUpperCase().contains(conteudo.toUpperCase())) {
+                            dlm.addElement(itens.get(i).get(j).toString());
+                        }
                     }
                 }
+                listItens.setModel(dlm);
             }
         }
-
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     /**
@@ -328,10 +333,10 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTable table;
+    private javax.swing.JList<String> listItens;
     private javax.swing.JTextField textFieldBusca;
     private javax.swing.JLabel textFieldFileName;
     // End of variables declaration//GEN-END:variables

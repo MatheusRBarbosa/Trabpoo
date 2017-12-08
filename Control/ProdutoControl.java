@@ -7,6 +7,7 @@ package Control;
 
 import Model.Item;
 import Model.Produto;
+import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -15,9 +16,9 @@ import java.util.Map;
  */
 public class ProdutoControl {
     
-    public Produto buscaProduto(int codigo, Map<Integer, Item> itens){
+    public ArrayList<Item> buscaProduto(int codigo, Map<Integer, ArrayList<Item>> itens){
         if(itens.containsKey(codigo)){
-            return itens.get(codigo).getProduto();
+            return itens.get(codigo);
         }
         return null;
     }
