@@ -10,4 +10,14 @@ public class Livro extends Produto{
         this.autor = autor;
         this.numPag = numPag;
     }
+
+    public String getAutor() {
+        return autor;
+    }
+
+    public String getNumPag() {
+        return numPag;
+    }
+    
+    
 }

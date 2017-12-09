@@ -12,6 +12,7 @@ import Model.Livro;
 import Model.Loja;
 import Model.Produto;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,24 +43,24 @@ public class ItemControl {
             String nome = dados[3];
 
             ArrayList<Item> prodItem = produtoControl.buscaProduto(codigo, itens);
-            //0 - Loja, 1 - Codigo, 2 - Nome, 3 - Valor, 4 - 7 Especifico
+            //0 - Loja, 1 - Codigo, 2 - Tipo, 3 - Nome, 4 - Quantidade, 5 Valor, 6 - 8 Especifico
             if (prodItem == null) {
                 prodItem = new ArrayList<>();
             }
             switch (dados[2]) {
                 case "ItemCasa":
-                    prod = new ItemCasa(codigo, nome, dados[5], dados[6], dados[7]);
+                    prod = new ItemCasa(codigo, nome, dados[6], dados[7], dados[8]);
                     break;
                 case "Eletronico":
-                    prod = new Eletronico(codigo, nome, dados[5], dados[6], dados[7]);
+                    prod = new Eletronico(codigo, nome, dados[6], dados[7], dados[8]);
                     break;
                 case "Livro":
-                    prod = new Livro(codigo, nome, dados[5], dados[6]);
+                    prod = new Livro(codigo, nome, dados[6], dados[7]);
                     break;
             }
-
-            double valor = Double.parseDouble(dados[4].replace(',', '.'));
-            item = new Item(prod, loja, valor);
+            double valor = Double.parseDouble(dados[5].replace(".", "").replace(',', '.'));
+            int quantidade = Integer.parseInt(dados[4]);
+            item = new Item(prod, loja, valor, quantidade);
             prodItem.add(item);
             itens.put(codigo, prodItem);
         }

@@ -13,4 +13,18 @@ public class ItemCasa extends Produto{
         this.tipo = tipo;
     }
 
+    public String getMaterial() {
+        return material;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+    
+    
+
 }

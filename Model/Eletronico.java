@@ -12,4 +12,18 @@ public class Eletronico extends Produto{
         this.peso = peso;
         this.cor = cor;
     }
+
+    public String getMarca() {
+        return marca;
+    }
+
+    public String getPeso() {
+        return peso;
+    }
+
+    public String getCor() {
+        return cor;
+    }
+    
+    
 }

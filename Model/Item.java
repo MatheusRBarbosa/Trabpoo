@@ -9,15 +9,17 @@ public class Item {
     private Produto produto;
     private Loja loja;
     private double valor;
+    private int quantidade;
 
     private static Map<Integer, ArrayList<Item>> itens = new HashMap<>();
 
     public Item(){}
     
-    public Item(Produto produto, Loja loja, double valor) {
+    public Item(Produto produto, Loja loja, double valor, int quantidade) {
         this.produto = produto;
         this.loja = loja;
         this.valor = valor;
+        this.quantidade = quantidade;
     }
 
     public Map<Integer, ArrayList<Item>> getItens() {
@@ -28,12 +30,20 @@ public class Item {
         this.itens = itens;
     }
 
-    public double getValor() {
+    public Double getValor() {
         return valor;
     }
 
     public Loja getLoja() {
         return loja;
+    }
+
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
     }
 
     public Produto getProduto() {
@@ -52,7 +62,8 @@ public class Item {
         return "["+this.getProduto().getCodigo()+"]"+
                 " Produto: "+this.getProduto().getNome()+
                 " - "+this.getLoja().getNome()+
-                " - R$"+this.getValor()+"\n";
+                " - R$"+this.getValor()+
+                " - "+this.getQuantidade()+" un.";
     }
 
 }
