@@ -32,4 +32,28 @@ public class FileR {
         br.close();
         return produtos;
     }
+    
+    public static void escrever_dat(List<Item> lista) {
+		try {
+			File arqprod = new File("C:/Users/PC/Downloads/Teste.dat"); //cria ou sobrescreve o arquivo
+			PrintStream writer = new PrintStream(arqprod); //cria writer
+			
+			for (Item i:lista) { //percorre arraylist
+				//writer.println(i.getloja() + ";" + i.gettipo() + ";" + i.getid());
+				if (i.getProduto() instanceof Livro) {
+					write.println(i.getLoja().getNome() + ";" + i.getProduto().getCodigo() + ";" + "Livro" + ";" + i.getProduto.getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + i.getProduto().getAutor() + ";" + i.getProduto().getNumPag());
+				}
+				if (i.getProduto() instanceof ItemCasa) {
+					write.println(i.getLoja().getNome() + ";" + i.getProduto().getCodigo() + ";" + "ItemCasa" + ";" + i.getProduto.getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + i.getProduto().getMaterial() + ";" + i.getProduto().getCor() + ";" + i.getProduto().getTipo());
+				}
+				if (i.getProduto() instanceof Eletronico) {
+					write.println(i.getLoja().getNome() + ";" + i.getProduto().getCodigo() + ";" + "Eletronico" + ";" + i.getProduto.getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + i.getProduto().getMarca() + ";" + i.getProduto().getPeso() + ";" + i.getProduto().getCor());
+				}
+			}
+			writer.close();
+		} catch(FileNotFoundException fnf) {
+			System.err.println("Não encontrou o file");
+		}
+		
+	}
 }
