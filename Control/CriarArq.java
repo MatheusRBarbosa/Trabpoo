@@ -1,3 +1,5 @@
+package Control;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintStream;
@@ -15,7 +17,7 @@ public class CriarArq {
 			}
 			writer.close();
 		} catch(FileNotFoundException fnf) {
-			System.err.println("Não encontrou o file");
+			System.err.println("NÃ£o encontrou o file");
 		}
 		
 	}
