@@ -33,11 +33,12 @@ public class Menu extends javax.swing.JFrame {
     Item item;
     Map<Integer, ArrayList<Item>> itens;
     SelectedItens si = new SelectedItens();
-    HistoricoCompra hc = new HistoricoCompra();
+    HistoricoCompra hc;
     private boolean finded = false;
     String[] info;
 
     public Menu() {
+        hc = new HistoricoCompra();
         info = new String[2];
         item = new Item();
         file = new FileR();
@@ -351,8 +352,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_fileSelect1ActionPerformed
 
     private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed
-        String label = "Label";
-        hc.displayHistorico(label);
+        hc.displayHistorico();
     }//GEN-LAST:event_btnHistoricoActionPerformed
 
     /**

@@ -7,10 +7,8 @@ package View;
 
 import Model.Item;
 import java.awt.Color;
-import java.awt.HeadlessException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -23,6 +21,7 @@ public class SelectedItens extends javax.swing.JFrame {
 
     Item item = new Item();
     Map<Integer, ArrayList<Item>> itens = new HashMap<>();
+    HistoricoCompra hs = new HistoricoCompra();
     int codigo;
 
     public SelectedItens() {
@@ -34,11 +33,11 @@ public class SelectedItens extends javax.swing.JFrame {
         this.info = info;
     }
 
-    public void showTime(){
+    public void showTime() {
         resultadoCompra.setText("");
         this.show();
     }
-    
+
     public void displayProduto() {
         itens = item.getItens();
         codigo = Integer.parseInt(info[0]);
@@ -172,15 +171,17 @@ public class SelectedItens extends javax.swing.JFrame {
         int qtd = Integer.parseInt(qtdComprar.getValue().toString());
         if (item.getQuantidade() > 0) {
             if (item.getQuantidade() >= qtd) {
-                
-                for(int i=0;i<itens.get(codigo).size();i++){
-                    if (itens.get(codigo).get(i).getLoja().getNome().equals(info[1])) {
-                        itens.get(codigo).get(i).setQuantidade(item.getQuantidade() - qtd);
-                        item.setItens(itens);
-                        qtdProduto.setText(""+(item.getQuantidade()));
-                        resultadoCompra.setForeground(Color.green);
-                        resultadoCompra.setText("Compra feita com sucesso !");
-                  }
+                if (qtd > 0) {
+                    for (int i = 0; i < itens.get(codigo).size(); i++) {
+                        if (itens.get(codigo).get(i).getLoja().getNome().equals(info[1])) {
+                            itens.get(codigo).get(i).setQuantidade(item.getQuantidade() - qtd);
+                            hs.addHistorico(qtd, item);
+                            item.setItens(itens);
+                            qtdProduto.setText("" + (item.getQuantidade()));
+                            resultadoCompra.setForeground(Color.green);
+                            resultadoCompra.setText("Compra feita com sucesso !");
+                        }
+                    }
                 }
             } else {
                 resultadoCompra.setForeground(Color.red);

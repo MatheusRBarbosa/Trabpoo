@@ -5,8 +5,13 @@
  */
 package View;
 
+import Model.Eletronico;
+import Model.Item;
+import Model.ItemCasa;
+import Model.Livro;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
 
 /**
  *
@@ -17,22 +22,36 @@ public class HistoricoCompra extends javax.swing.JFrame {
     /**
      * Creates new form HistoricoCompra
      */
-    static DefaultListModel dlm = new DefaultListModel();
-    
+    private static DefaultListModel dlm = new DefaultListModel();
+    private static List<Item> historico = new ArrayList<>();
+    private static List<Integer> qtdHistorico = new ArrayList<>();
+
     public HistoricoCompra() {
         initComponents();
     }
-    
-    public void displayHistorico(String label){
-        setLabel(label);
-        this.show();
+
+    public void displayHistorico() {
+        System.out.println("============== Historico ================");
+        for (int i = 0; i < historico.size(); i++) {
+            if (historico.get(i).getProduto() instanceof Livro) {
+                System.out.println(historico.get(i).getLoja().getNome() + " - " + "Livro - " + historico.get(i).getProduto().getNome()+" "+qtdHistorico.get(i)+"x");
+            } else if (historico.get(i).getProduto() instanceof Eletronico) {
+                System.out.println(historico.get(i).getLoja().getNome() + " - " + "Eletronico - " + historico.get(i).getProduto().getNome()+" "+qtdHistorico.get(i)+"x");
+            } else if (historico.get(i).getProduto() instanceof ItemCasa) {
+                System.out.println(historico.get(i).getLoja().getNome() + " - " + "ItemCasa - " + historico.get(i).getProduto().getNome()+" "+qtdHistorico.get(i)+"x");
+            }
+
+        }
+        System.out.println("=========================================");
     }
-    
-    private void setLabel(String label){
-        JLabel lbl = new JLabel(label);
-        dlm.addElement(label);
+
+    public void addHistorico(int qtd, Item item) {
+        dlm.addElement(item.toString());
+        historico.add(item);
+        qtdHistorico.add(qtd);
         listaHistorico.setModel(dlm);
     }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -60,7 +79,7 @@ public class HistoricoCompra extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addGap(0, 0, Short.MAX_VALUE)))
