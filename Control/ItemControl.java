@@ -31,7 +31,7 @@ public class ItemControl {
 
     public void setItens(List produtos) {
 
-        lojaControl.setLojas();//ler no arquivo
+       //lojaControl.setLojas();//ler no arquivo
         Produto prod = null;
 
         for (int i = 0; i < produtos.size(); i++) {

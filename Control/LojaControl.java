@@ -14,23 +14,29 @@ import java.util.List;
  * @author mathe
  */
 public class LojaControl {
+
     private List<Loja> lojas = new ArrayList<>();
-    public void setLojas(){
-        lojas.add(new Loja("AMER", "Americanas.com", 5));
-        lojas.add(new Loja("SARA", "Livraria Saraiva", 5));
-        lojas.add(new Loja("SUBM", "Submarino.com", 4));
-        lojas.add(new Loja("RICE", "Ricardo Eletro", 4));
-        lojas.add(new Loja("MAGA", "Magazine Luiza", 5));
-        lojas.add(new Loja("MEGA", "Megaloja Palace", 1));
+    Loja loja = new Loja();
+
+    public void setLojas(List<String> lojasFile) {
+ 
+        for (int i = 0; i < lojasFile.size(); i++) {
+            String[] dados = lojasFile.get(i).split(";");
+            
+            lojas.add(new Loja(dados[0], dados[1], Integer.parseInt(dados[2])));
+        }
+        loja.setLojas(lojas);
+
     }
-    
-    public Loja buscaLoja(String codigo){
-        for(int i=0;i<lojas.size();i++){
-            if(lojas.get(i).getCodigo().equals(codigo)){
+
+    public Loja buscaLoja(String codigo) {
+        lojas = loja.getLojas();
+        for (int i = 0; i < lojas.size(); i++) {
+            if (lojas.get(i).getCodigo().equals(codigo)) {
                 return lojas.get(i);
             }
         }
         return null;
     }
-    
+
 }

@@ -6,11 +6,13 @@
 package View;
 
 import Control.ItemControl;
+import Control.LojaControl;
 import Model.Eletronico;
 import Model.FileR;
 import Model.Item;
 import Model.ItemCasa;
 import Model.Livro;
+import Model.Loja;
 import Model.Produto;
 import java.io.File;
 
@@ -31,6 +33,7 @@ public class Menu extends javax.swing.JFrame {
     Produto produtos;
     ItemControl itemControl;
     Item item;
+    LojaControl lojaControl;
     Map<Integer, ArrayList<Item>> itens;
     SelectedItens si = new SelectedItens();
     HistoricoCompra hc;
@@ -43,6 +46,7 @@ public class Menu extends javax.swing.JFrame {
         item = new Item();
         file = new FileR();
         itemControl = new ItemControl();
+        lojaControl = new LojaControl();
         initComponents();
     }
 
@@ -348,7 +352,28 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void fileSelect1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileSelect1ActionPerformed
-        // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+
+        int returnVal = fileChooser.showOpenDialog(Menu.this);
+
+        if (returnVal == fileChooser.APPROVE_OPTION) {
+
+            setVisible(false);
+            String path = fileChooser.getSelectedFile().getAbsolutePath();
+            String filename = fileChooser.getSelectedFile().getName();
+
+            //This is where a real application would open the file.
+            FileR file = new FileR();
+            try {
+                lojaControl.setLojas(file.readFile(path));
+
+            } catch (IOException ex) {
+            }
+
+            textFieldFileName1.setText(filename);
+            this.show();
+
+        }
     }//GEN-LAST:event_fileSelect1ActionPerformed
 
     private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed

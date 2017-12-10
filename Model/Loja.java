@@ -17,14 +17,35 @@ public class Loja {
     private String codigo;
     private String nome;
     private int avaliacao;
-    private static List<String> lojas = new ArrayList<>();
+    private static List<Loja> lojas = new ArrayList<>();
+    private static List<String> l = new ArrayList<>();
+    
+    public Loja(){}
 
     public Loja(String codigo, String nome, int avaliacao) {
         this.codigo = codigo;
         this.nome = nome;
         this.avaliacao = avaliacao;
     }
+    
+    public void setLojas(List<Loja> lojas){
+        this.lojas = lojas;
+    }
+    
+    public static List<Loja> getLojas() {
+        return lojas;
+    }
 
+    public static List<String> getL() {
+        return l;
+    }
+
+    public static void setL(List<String> l) {
+        Loja.l = l;
+    }
+
+    
+    
     public String getCodigo() {
         return codigo;
     }

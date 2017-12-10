@@ -19,18 +19,18 @@ import java.util.List;
  */
 public class FileR {
 
-    private List<String> produtos = new ArrayList<>();
+    private List<String> file = new ArrayList<>();
 
-    public List readFile(String path) throws IOException {
+    public List<String> readFile(String path) throws IOException {
 
         BufferedReader br = new BufferedReader(new FileReader(path));
 
         while (br.ready()) {
             String line = br.readLine();
-            produtos.add(line);
+            file.add(line);
         }
         br.close(); 
-        return produtos;
+        return file;
     }
     
     /*public static void escrever_dat(List<Item> lista) {
