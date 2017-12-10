@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 /**
  *
  * @author mathe
@@ -29,34 +31,36 @@ public class FileR {
             String line = br.readLine();
             file.add(line);
         }
-        br.close(); 
+        br.close();
         return file;
     }
-    
-    public static void escrever_dat(List<Item> lista) {
-		try {
-			File arqprod = new File("C:/Users/PC/Downloads/Teste.dat"); //cria ou sobrescreve o arquivo
-			PrintStream writer = new PrintStream(arqprod); //cria writer
-			
-			for (Item i:lista) { //percorre arraylist
-				//writer.println(i.getloja() + ";" + i.gettipo() + ";" + i.getid());
-				if (i.getProduto() instanceof Livro) {
-					Livro iprod = (Livro)i.getProduto();
-					writer.println(i.getLoja().getNome() + ";" + i.getProduto().getCodigo() + ";" + "Livro" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + iprod.getAutor() + ";" + iprod.getNumPag());
-                                }
-				if (i.getProduto() instanceof ItemCasa) {
-					ItemCasa iprod = (ItemCasa)i.getProduto();
-					writer.println(i.getLoja().getNome() + ";" + i.getProduto().getCodigo() + ";" + "ItemCasa" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + iprod.getMaterial() + ";" + iprod.getCor() + ";" + iprod.getTipo());
-				}
-				if (i.getProduto() instanceof Eletronico) {
-					Eletronico iprod =(Eletronico)i.getProduto();
-					writer.println(i.getLoja().getNome() + ";" + i.getProduto().getCodigo() + ";" + "Eletronico" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + iprod.getMarca() + ";" + iprod.getPeso() + ";" + iprod.getCor());
-				}
-			}
-			writer.close();
-		} catch(FileNotFoundException fnf) {
-			System.err.println("NÃ£o encontrou o file");
-		}
-		
-	}
+
+    public static void writeFile(Map<Integer, ArrayList<Item>> lista) {
+        try {
+            File arqprod = new File("C:/Users/mathe/Desktop/Teste.dat"); //cria ou sobrescreve o arquivo
+            PrintStream writer = new PrintStream(arqprod); //cria writer
+            for (Integer j : lista.keySet()) {
+                for (Item i : lista.get(j)) { //percorre arraylist
+                    //writer.println(i.getloja() + ";" + i.gettipo() + ";" + i.getid());
+                    if (i.getProduto() instanceof Livro) {
+                        Livro iprod = (Livro) i.getProduto();
+                        writer.println(i.getLoja().getCodigo() + ";" + i.getProduto().getCodigo() + ";" + "Livro" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + iprod.getAutor() + ";" + iprod.getNumPag());
+                    }
+                    if (i.getProduto() instanceof ItemCasa) {
+                        ItemCasa iprod = (ItemCasa) i.getProduto();
+                        writer.println(i.getLoja().getCodigo() + ";" + i.getProduto().getCodigo() + ";" + "ItemCasa" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + iprod.getMaterial() + ";" + iprod.getCor() + ";" + iprod.getTipo());
+                    }
+                    if (i.getProduto() instanceof Eletronico) {
+                        Eletronico iprod = (Eletronico) i.getProduto();
+                        writer.println(i.getLoja().getCodigo() + ";" + i.getProduto().getCodigo() + ";" + "Eletronico" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + iprod.getMarca() + ";" + iprod.getPeso() + ";" + iprod.getCor());
+                    }
+                }
+            }
+
+            writer.close();
+        } catch (FileNotFoundException fnf) {
+            System.err.println("NÃ£o encontrou o file");
+        }
+
+    }
 }

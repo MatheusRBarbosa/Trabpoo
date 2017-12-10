@@ -35,16 +35,18 @@ public class Menu extends javax.swing.JFrame {
     Item item;
     LojaControl lojaControl;
     Map<Integer, ArrayList<Item>> itens;
-    SelectedItens si = new SelectedItens();
     HistoricoCompra hc;
     private boolean finded = false;
     String[] info;
+    
+    SelectedItens si = new SelectedItens();
+    ListaLojas lLojas = new ListaLojas();
 
     public Menu() {
+        file = new FileR();
         hc = new HistoricoCompra();
         info = new String[2];
         item = new Item();
-        file = new FileR();
         itemControl = new ItemControl();
         lojaControl = new LojaControl();
         initComponents();
@@ -145,8 +147,18 @@ public class Menu extends javax.swing.JFrame {
         jScrollPane1.setViewportView(listItens);
 
         btnSalvarCompras.setText("Salvar compras");
+        btnSalvarCompras.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarComprasActionPerformed(evt);
+            }
+        });
 
         btnExibirLojas.setText("Exibir lojas");
+        btnExibirLojas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExibirLojasActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("Arquivo de loja:");
 
@@ -168,15 +180,10 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(191, 191, 191)
-                                .addComponent(btnComprar)
-                                .addGap(66, 66, 66)
-                                .addComponent(btnSalvarCompras))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(btnExibirLojas, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(191, 191, 191)
+                        .addComponent(btnComprar)
+                        .addGap(66, 66, 66)
+                        .addComponent(btnSalvarCompras)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
@@ -197,7 +204,7 @@ public class Menu extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel1)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(textFieldBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -206,6 +213,10 @@ public class Menu extends javax.swing.JFrame {
                                 .addComponent(btnHistorico))
                             .addComponent(jScrollPane1))))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnExibirLojas, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,8 +276,6 @@ public class Menu extends javax.swing.JFrame {
             String path = fileChooser.getSelectedFile().getAbsolutePath();
             String filename = fileChooser.getSelectedFile().getName();
 
-            //This is where a real application would open the file.
-            FileR file = new FileR();
             try {
                 produtos.setProdutos(file.readFile(path));
                 itemControl.setItens(produtos.getProdutos());
@@ -352,18 +361,16 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void fileSelect1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileSelect1ActionPerformed
-        JFileChooser fileChooser = new JFileChooser();
+        JFileChooser fileChooser1 = new JFileChooser();
 
-        int returnVal = fileChooser.showOpenDialog(Menu.this);
+        int returnVal1 = fileChooser1.showOpenDialog(Menu.this);
 
-        if (returnVal == fileChooser.APPROVE_OPTION) {
+        if (returnVal1 == fileChooser1.APPROVE_OPTION) {
 
             setVisible(false);
-            String path = fileChooser.getSelectedFile().getAbsolutePath();
-            String filename = fileChooser.getSelectedFile().getName();
+            String path = fileChooser1.getSelectedFile().getAbsolutePath();
+            String filename = fileChooser1.getSelectedFile().getName();
 
-            //This is where a real application would open the file.
-            FileR file = new FileR();
             try {
                 lojaControl.setLojas(file.readFile(path));
 
@@ -379,6 +386,14 @@ public class Menu extends javax.swing.JFrame {
     private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed
         hc.displayHistorico();
     }//GEN-LAST:event_btnHistoricoActionPerformed
+
+    private void btnExibirLojasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExibirLojasActionPerformed
+        lLojas.showLojas();
+    }//GEN-LAST:event_btnExibirLojasActionPerformed
+
+    private void btnSalvarComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarComprasActionPerformed
+        file.writeFile(itens);
+    }//GEN-LAST:event_btnSalvarComprasActionPerformed
 
     /**
      * @param args the command line arguments

@@ -46,9 +46,10 @@ public class HistoricoCompra extends javax.swing.JFrame {
     }
 
     public void addHistorico(int qtd, Item item) {
-        dlm.addElement(item.toString());
         historico.add(item);
         qtdHistorico.add(qtd);
+        
+        dlm.addElement(item.toString());
         listaHistorico.setModel(dlm);
     }
 

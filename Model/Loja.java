@@ -18,7 +18,6 @@ public class Loja {
     private String nome;
     private int avaliacao;
     private static List<Loja> lojas = new ArrayList<>();
-    private static List<String> l = new ArrayList<>();
     
     public Loja(){}
 
@@ -32,26 +31,25 @@ public class Loja {
         this.lojas = lojas;
     }
     
-    public static List<Loja> getLojas() {
+    public List<Loja> getLojas() {
         return lojas;
     }
-
-    public static List<String> getL() {
-        return l;
-    }
-
-    public static void setL(List<String> l) {
-        Loja.l = l;
-    }
-
-    
-    
+     
     public String getCodigo() {
         return codigo;
     }
 
     public String getNome() {
         return nome;
+    }
+
+    public int getAvaliacao() {
+        return avaliacao;
+    }
+    
+    @Override
+    public String toString(){
+        return getNome()+" - Nota: "+getAvaliacao();
     }
 
 }
