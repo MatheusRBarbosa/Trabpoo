@@ -1,11 +1,12 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Item {
-
+public class Item implements Serializable{
+    private static final long serialVerionUID = 1L;
     private Produto produto;
     private Loja loja;
     private double valor;

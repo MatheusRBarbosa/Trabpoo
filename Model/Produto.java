@@ -1,10 +1,11 @@
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Produto {
-
+public class Produto implements Serializable{
+    private static final long serialVerionUID = 1L;
     private static List<String> produtos = new ArrayList<>();
     private String nome;
     private int codigo;

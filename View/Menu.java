@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 
@@ -38,7 +40,7 @@ public class Menu extends javax.swing.JFrame {
     HistoricoCompra hc;
     private boolean finded = false;
     String[] info;
-    
+
     SelectedItens si = new SelectedItens();
     ListaLojas lLojas = new ListaLojas();
 
@@ -275,14 +277,20 @@ public class Menu extends javax.swing.JFrame {
             setVisible(false);
             String path = fileChooser.getSelectedFile().getAbsolutePath();
             String filename = fileChooser.getSelectedFile().getName();
-
-            try {
-                produtos.setProdutos(file.readFile(path));
-                itemControl.setItens(produtos.getProdutos());
-
-            } catch (IOException ex) {
+            
+            String extensao = filename.substring(filename.lastIndexOf("."), filename.length());
+            if (extensao.equals(".txt")) {
+                try {
+                    produtos.setProdutos(file.readFile(path));
+                    itemControl.setItens(produtos.getProdutos());
+                } catch (IOException ex) {
+                    Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            } else if (extensao.equals(".dat")) {
+                Map<Integer, ArrayList<Item>> sItens = file.lerProdutos(path);
+                item.setItens(sItens);
             }
-
+            
             textFieldFileName.setText(filename);
             this.show();
 
@@ -392,6 +400,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExibirLojasActionPerformed
 
     private void btnSalvarComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarComprasActionPerformed
+        // file.writeFile(itens, "C:/Users/mathe/Desktop/Teste.dat");
         file.writeFile(itens);
     }//GEN-LAST:event_btnSalvarComprasActionPerformed
 

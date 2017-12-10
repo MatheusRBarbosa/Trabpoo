@@ -7,13 +7,19 @@ package Model;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -35,32 +41,35 @@ public class FileR {
         return file;
     }
 
-    public static void writeFile(Map<Integer, ArrayList<Item>> lista) {
-        try {
-            File arqprod = new File("C:/Users/mathe/Desktop/Teste.dat"); //cria ou sobrescreve o arquivo
-            PrintStream writer = new PrintStream(arqprod); //cria writer
-            for (Integer j : lista.keySet()) {
-                for (Item i : lista.get(j)) { //percorre arraylist
-                    //writer.println(i.getloja() + ";" + i.gettipo() + ";" + i.getid());
-                    if (i.getProduto() instanceof Livro) {
-                        Livro iprod = (Livro) i.getProduto();
-                        writer.println(i.getLoja().getCodigo() + ";" + i.getProduto().getCodigo() + ";" + "Livro" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + iprod.getAutor() + ";" + iprod.getNumPag());
-                    }
-                    if (i.getProduto() instanceof ItemCasa) {
-                        ItemCasa iprod = (ItemCasa) i.getProduto();
-                        writer.println(i.getLoja().getCodigo() + ";" + i.getProduto().getCodigo() + ";" + "ItemCasa" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + iprod.getMaterial() + ";" + iprod.getCor() + ";" + iprod.getTipo());
-                    }
-                    if (i.getProduto() instanceof Eletronico) {
-                        Eletronico iprod = (Eletronico) i.getProduto();
-                        writer.println(i.getLoja().getCodigo() + ";" + i.getProduto().getCodigo() + ";" + "Eletronico" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + iprod.getMarca() + ";" + iprod.getPeso() + ";" + iprod.getCor());
-                    }
-                }
-            }
+    public void writeFile(Map<Integer, ArrayList<Item>> itens) {
 
-            writer.close();
-        } catch (FileNotFoundException fnf) {
-            System.err.println("NÃ£o encontrou o file");
+        try {
+            FileOutputStream out = new FileOutputStream("C:/Users/mathe/Desktop/Produtos.dat");
+            ObjectOutputStream objOut = new ObjectOutputStream(out);
+
+            objOut.writeObject(itens);
+            objOut.close();
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(FileR.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(FileR.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+    }
+
+    public Map<Integer, ArrayList<Item>> lerProdutos(String path) { // caaaaguei
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(path));
+            Map<Integer, ArrayList<Item>> lista = (Map<Integer, ArrayList<Item>>) in.readObject();
+            in.close();
+            return lista;
+
+        } catch (FileNotFoundException e) {
+        } catch (IOException | ClassNotFoundException e) {
+        }
+        System.out.println("Erro na leitura");
+        return null;
 
     }
 }

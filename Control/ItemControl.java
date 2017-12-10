@@ -29,13 +29,13 @@ public class ItemControl {
     ProdutoControl produtoControl = new ProdutoControl();
     String[] dados;
 
-    public void setItens(List produtos) {
+    public void setItens(List<String> produtos) {
 
         lojaControl.sLoja();//ler no arquivo
         Produto prod = null;
 
         for (int i = 0; i < produtos.size(); i++) {
-            dados = produtos.get(i).toString().split(";");
+            dados = produtos.get(i).split(";");
 
             Loja loja = lojaControl.buscaLoja(dados[0]);
 

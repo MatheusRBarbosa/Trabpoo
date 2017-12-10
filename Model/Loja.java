@@ -5,6 +5,7 @@
  */
 package Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +13,8 @@ import java.util.List;
  *
  * @author mathe
  */
-public class Loja {
-
+public class Loja implements Serializable{
+    private static final long serialVerionUID = 1L;
     private String codigo;
     private String nome;
     private int avaliacao;
