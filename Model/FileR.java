@@ -33,7 +33,7 @@ public class FileR {
         return produtos;
     }
     
-    /*public static void escrever_dat(List<Item> lista) {
+    public static void escrever_dat(List<Item> lista) {
 		try {
 			File arqprod = new File("C:/Users/PC/Downloads/Teste.dat"); //cria ou sobrescreve o arquivo
 			PrintStream writer = new PrintStream(arqprod); //cria writer
@@ -41,19 +41,22 @@ public class FileR {
 			for (Item i:lista) { //percorre arraylist
 				//writer.println(i.getloja() + ";" + i.gettipo() + ";" + i.getid());
 				if (i.getProduto() instanceof Livro) {
-					writer.println(i.getLoja().getNome() + ";" + i.getProduto().getCodigo() + ";" + "Livro" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + i.getProduto().getAutor() + ";" + i.getProduto().getNumPag());
+					Livro iprod = (Livro)i.getProduto();
+					writer.println(i.getLoja().getNome() + ";" + i.getProduto().getCodigo() + ";" + "Livro" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + iprod.getAutor() + ";" + iprod.getNumPag());
                                 }
 				if (i.getProduto() instanceof ItemCasa) {
-					writer.println(i.getLoja().getNome() + ";" + i.getProduto().getCodigo() + ";" + "ItemCasa" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + i.getProduto().getMaterial() + ";" + i.getProduto().getCor() + ";" + i.getProduto().getTipo());
+					ItemCasa iprod = (ItemCasa)i.getProduto();
+					writer.println(i.getLoja().getNome() + ";" + i.getProduto().getCodigo() + ";" + "ItemCasa" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + iprod.getMaterial() + ";" + iprod.getCor() + ";" + iprod.getTipo());
 				}
 				if (i.getProduto() instanceof Eletronico) {
-					writer.println(i.getLoja().getNome() + ";" + i.getProduto().getCodigo() + ";" + "Eletronico" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + i.getProduto().getMarca() + ";" + i.getProduto().getPeso() + ";" + i.getProduto().getCor());
+					Eletronico iprod =(Eletronico)i.getProduto();
+					writer.println(i.getLoja().getNome() + ";" + i.getProduto().getCodigo() + ";" + "Eletronico" + ";" + i.getProduto().getNome() + ";" + i.getQuantidade() + ";" + i.getValor() + ";" + iprod.getMarca() + ";" + iprod.getPeso() + ";" + iprod.getCor());
 				}
 			}
 			writer.close();
 		} catch(FileNotFoundException fnf) {
-			System.err.println("Não encontrou o file");
+			System.err.println("NÃ£o encontrou o file");
 		}
 		
-	}*/
+	}
 }
