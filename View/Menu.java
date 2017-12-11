@@ -40,6 +40,7 @@ public class Menu extends javax.swing.JFrame {
     HistoricoCompra hc;
     private boolean finded = false;
     String[] info;
+    String pathIn;
 
     SelectedItens si = new SelectedItens();
     ListaLojas lLojas = new ListaLojas();
@@ -275,22 +276,22 @@ public class Menu extends javax.swing.JFrame {
         if (returnVal == fileChooser.APPROVE_OPTION) {
 
             setVisible(false);
-            String path = fileChooser.getSelectedFile().getAbsolutePath();
+            pathIn = fileChooser.getSelectedFile().getAbsolutePath();
             String filename = fileChooser.getSelectedFile().getName();
-            
+
             String extensao = filename.substring(filename.lastIndexOf("."), filename.length());
             if (extensao.equals(".txt")) {
                 try {
-                    produtos.setProdutos(file.readFile(path));
+                    produtos.setProdutos(file.readFile(pathIn));
                     itemControl.setItens(produtos.getProdutos());
                 } catch (IOException ex) {
                     Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                 }
             } else if (extensao.equals(".dat")) {
-                Map<Integer, ArrayList<Item>> sItens = file.lerProdutos(path);
+                Map<Integer, ArrayList<Item>> sItens = file.lerProdutos(pathIn);
                 item.setItens(sItens);
             }
-            
+
             textFieldFileName.setText(filename);
             this.show();
 
@@ -401,7 +402,18 @@ public class Menu extends javax.swing.JFrame {
 
     private void btnSalvarComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarComprasActionPerformed
         // file.writeFile(itens, "C:/Users/mathe/Desktop/Teste.dat");
-        file.writeFile(itens);
+        String[] token = pathIn.split("\\\\");
+        token[token.length - 1] = "produtos.dat";
+        String newPath = "";
+        for (int i = 0; i < token.length; i++) {
+            if (i < token.length - 1) {
+                newPath += token[i] + "/";
+            }
+            else{
+                newPath += token[i];
+            }
+        }
+        file.writeFile(itens, newPath);
     }//GEN-LAST:event_btnSalvarComprasActionPerformed
 
     /**

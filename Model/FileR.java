@@ -41,10 +41,10 @@ public class FileR {
         return file;
     }
 
-    public void writeFile(Map<Integer, ArrayList<Item>> itens) {
+    public void writeFile(Map<Integer, ArrayList<Item>> itens, String path) {
 
         try {
-            FileOutputStream out = new FileOutputStream("C:/Users/mathe/Desktop/Produtos.dat");
+            FileOutputStream out = new FileOutputStream(path);
             ObjectOutputStream objOut = new ObjectOutputStream(out);
 
             objOut.writeObject(itens);
