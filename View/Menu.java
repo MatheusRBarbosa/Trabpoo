@@ -12,12 +12,11 @@ import Model.FileR;
 import Model.Item;
 import Model.ItemCasa;
 import Model.Livro;
-import Model.Loja;
 import Model.Produto;
-import java.io.File;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -46,7 +45,6 @@ public class Menu extends javax.swing.JFrame {
     ListaLojas lLojas = new ListaLojas();
 
     public Menu() {
-        file = new FileR();
         hc = new HistoricoCompra();
         info = new String[2];
         item = new Item();
@@ -84,8 +82,11 @@ public class Menu extends javax.swing.JFrame {
         btnSalvarCompras = new javax.swing.JButton();
         btnExibirLojas = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        fileSelect1 = new javax.swing.JButton();
         textFieldFileName1 = new javax.swing.JLabel();
+        comprasSalvas = new javax.swing.JLabel();
+        lblQtdItens = new javax.swing.JLabel();
+        lblQtdLojas = new javax.swing.JLabel();
+        lblQtdProdutos = new javax.swing.JLabel();
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -165,16 +166,17 @@ public class Menu extends javax.swing.JFrame {
 
         jLabel3.setText("Arquivo de loja:");
 
-        fileSelect1.setText("...");
-        fileSelect1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fileSelect1ActionPerformed(evt);
-            }
-        });
-
         textFieldFileName1.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N
         textFieldFileName1.setText("Selecione o arquivo");
         textFieldFileName1.setEnabled(false);
+
+        comprasSalvas.setFont(new java.awt.Font("Dialog", 1, 11)); // NOI18N
+
+        lblQtdItens.setText("Qtd Itens");
+
+        lblQtdLojas.setText("Qtd Lojas");
+
+        lblQtdProdutos.setText("Qtd Produtos");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -183,71 +185,84 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(191, 191, 191)
-                        .addComponent(btnComprar)
-                        .addGap(66, 66, 66)
-                        .addComponent(btnSalvarCompras)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(textFieldFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(fileSelect)
-                                .addGap(39, 39, 39)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(textFieldFileName1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(fileSelect1))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(textFieldBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnBuscar)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnHistorico))
-                            .addComponent(jScrollPane1))))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnExibirLojas, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(textFieldFileName1, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(textFieldFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(fileSelect))))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                                .addComponent(textFieldBusca, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(btnExibirLojas, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(35, 35, 35)
+                                                .addComponent(lblQtdItens)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(lblQtdProdutos)
+                                            .addComponent(btnBuscar))))
+                                .addGap(50, 50, 50)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblQtdLojas)
+                                    .addComponent(btnHistorico)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(134, 134, 134)
+                        .addComponent(btnComprar)
+                        .addGap(70, 70, 70)
+                        .addComponent(btnSalvarCompras)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(comprasSalvas)))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textFieldFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(fileSelect)
+                    .addComponent(textFieldFileName, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(fileSelect))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(fileSelect1)
                     .addComponent(textFieldFileName1, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addGap(20, 20, 20)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(textFieldBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBuscar)
-                    .addComponent(btnHistorico)
-                    .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnExibirLojas)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(textFieldBusca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnBuscar)
+                            .addComponent(btnHistorico)
+                            .addComponent(comboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnExibirLojas))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblQtdItens)
+                        .addComponent(lblQtdLojas)
+                        .addComponent(lblQtdProdutos)))
                 .addGap(14, 14, 14)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 203, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnComprar)
-                    .addComponent(btnSalvarCompras))
+                    .addComponent(btnSalvarCompras)
+                    .addComponent(comprasSalvas))
                 .addGap(40, 40, 40))
         );
 
@@ -269,6 +284,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnComprarActionPerformed
 
     private void fileSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileSelectActionPerformed
+        //Metodo para carregar os aquivos
         JFileChooser fileChooser = new JFileChooser();
 
         int returnVal = fileChooser.showOpenDialog(Menu.this);
@@ -282,8 +298,17 @@ public class Menu extends javax.swing.JFrame {
             String extensao = filename.substring(filename.lastIndexOf("."), filename.length());
             if (extensao.equals(".txt")) {
                 try {
+                    /*Carega o arquivo loja.txt. Precisa estar no ms diretorio 
+                    de produtos.txt e precisa ter o nome 'lojas.txt'*/
+                    file = new FileR();
+                    String lojaPath = file.createNewPath(pathIn, "lojas.txt");
+                    lojaControl.setLojas(file.readFile(lojaPath));
+
+                    //Carrega o arquivo produtos (pode ter qlq nome)
+                    file = new FileR();
                     produtos.setProdutos(file.readFile(pathIn));
                     itemControl.setItens(produtos.getProdutos());
+
                 } catch (IOException ex) {
                     Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -293,6 +318,7 @@ public class Menu extends javax.swing.JFrame {
             }
 
             textFieldFileName.setText(filename);
+            textFieldFileName1.setText("lojas.txt");
             this.show();
 
         }
@@ -302,15 +328,29 @@ public class Menu extends javax.swing.JFrame {
 
         String conteudo = textFieldBusca.getText();
         String cb = (String) comboBox.getSelectedItem();
+
+        int qProdutos = 0; // Conta e produtos
+        List<Integer> qItens = new ArrayList<>();
+        List<String> qLojas = new ArrayList<>(); //Conta as lojas listadas
+
         DefaultListModel dlm = new DefaultListModel();
         itens = item.getItens();
+
+        for (Integer i : itens.keySet()) {
+            Collections.sort(itens.get(i), new Item());
+        }
 
         if (itens != null) {
             if (cb.equals("Codigo")) {
                 int codigo = Integer.parseInt(conteudo);
                 if (this.itens.containsKey(codigo)) {
+                    qItens.add(codigo);
                     finded = true;
                     for (int j = 0; j < itens.get(codigo).size(); j++) {
+                        qProdutos++;
+                        if (!qLojas.contains(itens.get(codigo).get(j).getLoja().getCodigo())) {
+                            qLojas.add(itens.get(codigo).get(j).getLoja().getCodigo());
+                        }
                         dlm.addElement(itens.get(codigo).get(j).toString());
                     }
                 }
@@ -319,6 +359,15 @@ public class Menu extends javax.swing.JFrame {
                     for (int j = 0; j < itens.get(i).size(); j++) {
                         if (itens.get(i).get(j).getProduto().getNome().toUpperCase().contains(conteudo.toUpperCase())) {
                             finded = true;
+                            /*Contador de quantidade de Itens produtos e lojas*/
+                            qProdutos++;
+                            if (!qItens.contains(itens.get(i).get(j).getProduto().getCodigo())) {
+                                qItens.add(itens.get(i).get(j).getProduto().getCodigo());
+                            }
+                            if (!qLojas.contains(itens.get(i).get(j).getLoja().getCodigo())) {
+                                qLojas.add(itens.get(i).get(j).getLoja().getCodigo());
+                            }
+                            /**/
                             dlm.addElement(itens.get(i).get(j).toString());
                         }
                     }
@@ -328,6 +377,15 @@ public class Menu extends javax.swing.JFrame {
                     for (Integer i : itens.keySet()) {
                         for (int j = 0; j < itens.get(i).size(); j++) {
                             if (itens.get(i).get(j).getProduto() instanceof Livro) {
+                                /*Contador de quantidade de Itens produtos e lojas*/
+                                qProdutos++;
+                                if (!qItens.contains(itens.get(i).get(j).getProduto().getCodigo())) {
+                                    qItens.add(itens.get(i).get(j).getProduto().getCodigo());
+                                }
+                                if (!qLojas.contains(itens.get(i).get(j).getLoja().getCodigo())) {
+                                    qLojas.add(itens.get(i).get(j).getLoja().getCodigo());
+                                }
+                                /**/
                                 dlm.addElement(itens.get(i).get(j).toString());
                                 finded = true;
                             }
@@ -337,6 +395,15 @@ public class Menu extends javax.swing.JFrame {
                     for (Integer i : itens.keySet()) {
                         for (int j = 0; j < itens.get(i).size(); j++) {
                             if (itens.get(i).get(j).getProduto() instanceof Eletronico) {
+                                /*Contador de quantidade de Itens produtos e lojas*/
+                                qProdutos++;
+                                if (!qItens.contains(itens.get(i).get(j).getProduto().getCodigo())) {
+                                    qItens.add(itens.get(i).get(j).getProduto().getCodigo());
+                                }
+                                if (!qLojas.contains(itens.get(i).get(j).getLoja().getCodigo())) {
+                                    qLojas.add(itens.get(i).get(j).getLoja().getCodigo());
+                                }
+                                /**/
                                 dlm.addElement(itens.get(i).get(j).toString());
                                 finded = true;
                             }
@@ -346,6 +413,15 @@ public class Menu extends javax.swing.JFrame {
                     for (Integer i : itens.keySet()) {
                         for (int j = 0; j < itens.get(i).size(); j++) {
                             if (itens.get(i).get(j).getProduto() instanceof ItemCasa) {
+                                /*Contador de quantidade de Itens produtos e lojas*/
+                                qProdutos++;
+                                if (!qItens.contains(itens.get(i).get(j).getProduto().getCodigo())) {
+                                    qItens.add(itens.get(i).get(j).getProduto().getCodigo());
+                                }
+                                if (!qLojas.contains(itens.get(i).get(j).getLoja().getCodigo())) {
+                                    qLojas.add(itens.get(i).get(j).getLoja().getCodigo());
+                                }
+                                /**/
                                 dlm.addElement(itens.get(i).get(j).toString());
                                 finded = true;
                             }
@@ -356,6 +432,15 @@ public class Menu extends javax.swing.JFrame {
                 for (Integer i : itens.keySet()) {
                     for (int j = 0; j < itens.get(i).size(); j++) {
                         if (itens.get(i).get(j).getLoja().getNome().toUpperCase().contains(conteudo.toUpperCase())) {
+                            /*Contador de quantidade de Itens produtos e lojas*/
+                            qProdutos++;
+                            if (!qItens.contains(itens.get(i).get(j).getProduto().getCodigo())) {
+                                qItens.add(itens.get(i).get(j).getProduto().getCodigo());
+                            }
+                            if (!qLojas.contains(itens.get(i).get(j).getLoja().getCodigo())) {
+                                qLojas.add(itens.get(i).get(j).getLoja().getCodigo());
+                            }
+                            /**/
                             dlm.addElement(itens.get(i).get(j).toString());
                             finded = true;
                         }
@@ -365,32 +450,12 @@ public class Menu extends javax.swing.JFrame {
             if (!finded) {
                 dlm.addElement("Nenhum item encontrado !");
             }
+            lblQtdItens.setText("Qtd Itens: " + qItens.size());
+            lblQtdProdutos.setText("Qtd Produtos: " + qProdutos);
+            lblQtdLojas.setText("Qtd Lojas: " + qLojas.size());
             listItens.setModel(dlm);
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void fileSelect1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileSelect1ActionPerformed
-        JFileChooser fileChooser1 = new JFileChooser();
-
-        int returnVal1 = fileChooser1.showOpenDialog(Menu.this);
-
-        if (returnVal1 == fileChooser1.APPROVE_OPTION) {
-
-            setVisible(false);
-            String path = fileChooser1.getSelectedFile().getAbsolutePath();
-            String filename = fileChooser1.getSelectedFile().getName();
-
-            try {
-                lojaControl.setLojas(file.readFile(path));
-
-            } catch (IOException ex) {
-            }
-
-            textFieldFileName1.setText(filename);
-            this.show();
-
-        }
-    }//GEN-LAST:event_fileSelect1ActionPerformed
 
     private void btnHistoricoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoricoActionPerformed
         hc.displayHistorico();
@@ -401,19 +466,10 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExibirLojasActionPerformed
 
     private void btnSalvarComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarComprasActionPerformed
-        // file.writeFile(itens, "C:/Users/mathe/Desktop/Teste.dat");
-        String[] token = pathIn.split("\\\\");
-        token[token.length - 1] = "produtos.dat";
-        String newPath = "";
-        for (int i = 0; i < token.length; i++) {
-            if (i < token.length - 1) {
-                newPath += token[i] + "/";
-            }
-            else{
-                newPath += token[i];
-            }
-        }
+
+        String newPath = file.createNewPath(pathIn, "produtos.dat");
         file.writeFile(itens, newPath);
+        comprasSalvas.setText("Compras salvas !");
     }//GEN-LAST:event_btnSalvarComprasActionPerformed
 
     /**
@@ -460,8 +516,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JButton btnHistorico;
     private javax.swing.JButton btnSalvarCompras;
     private javax.swing.JComboBox<String> comboBox;
+    private javax.swing.JLabel comprasSalvas;
     private javax.swing.JButton fileSelect;
-    private javax.swing.JButton fileSelect1;
     private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -469,6 +525,9 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblQtdItens;
+    private javax.swing.JLabel lblQtdLojas;
+    private javax.swing.JLabel lblQtdProdutos;
     private javax.swing.JList<String> listItens;
     private javax.swing.JTextField textFieldBusca;
     private javax.swing.JLabel textFieldFileName;

@@ -7,13 +7,14 @@ package Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
  *
  * @author mathe
  */
-public class Loja implements Serializable{
+public class Loja implements Serializable, Comparator<Loja>{
     private static final long serialVerionUID = 1L;
     private String codigo;
     private String nome;
@@ -51,6 +52,11 @@ public class Loja implements Serializable{
     @Override
     public String toString(){
         return getNome()+" - Nota: "+getAvaliacao();
+    }
+
+    @Override
+    public int compare(Loja o1, Loja o2) {
+        return o1.getAvaliacao() - o2.getAvaliacao();
     }
 
 }

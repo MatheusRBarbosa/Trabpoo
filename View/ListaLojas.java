@@ -5,8 +5,12 @@
  */
 package View;
 
+import Control.LojaControl;
 import Model.Loja;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import javax.swing.DefaultListModel;
 
@@ -17,20 +21,25 @@ import javax.swing.DefaultListModel;
 public class ListaLojas extends javax.swing.JFrame {
 
     private List<Loja> lojas;
-    private Loja loja;
+    private LojaControl lojaControl;
     public ListaLojas() {
         lojas = new ArrayList<>();
-        loja = new Loja();
+        lojaControl = new LojaControl();
         initComponents();
     }
 
     private void addLista() {
-        lojas = loja.getLojas();
+        lojas = lojaControl.getLojas();
+        
+        Collections.sort(lojas, new Loja());
+        Collections.reverse(lojas);
+        
         DefaultListModel dlm = new DefaultListModel();
         for (int i = 0; i < lojas.size(); i++) {
             dlm.addElement(lojas.get(i).toString());
         }
         listLojas.setModel(dlm);
+        
     }
 
     public void showLojas() {
@@ -50,6 +59,8 @@ public class ListaLojas extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listLojas = new javax.swing.JList<>();
+
+        setTitle("Exibir lojas");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabel1.setText("Todas as lojas");

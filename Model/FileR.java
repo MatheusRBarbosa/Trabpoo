@@ -6,7 +6,6 @@
 package Model;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -14,7 +13,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -68,8 +66,21 @@ public class FileR {
         } catch (FileNotFoundException e) {
         } catch (IOException | ClassNotFoundException e) {
         }
-        System.out.println("Erro na leitura");
         return null;
 
+    }
+
+    public String createNewPath(String path, String filePath) {
+        String[] token = path.split("\\\\");
+        token[token.length - 1] = filePath;
+        String newPath = "";
+        for (int i = 0; i < token.length; i++) {
+            if (i < token.length - 1) {
+                newPath += token[i] + "/";
+            } else {
+                newPath += token[i];
+            }
+        }
+        return newPath;
     }
 }

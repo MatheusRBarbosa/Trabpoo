@@ -30,27 +30,25 @@ public class HistoricoCompra extends javax.swing.JFrame {
         initComponents();
     }
 
-    public void displayHistorico() {
-        System.out.println("============== Historico ================");
-        for (int i = 0; i < historico.size(); i++) {
-            if (historico.get(i).getProduto() instanceof Livro) {
-                System.out.println(historico.get(i).getLoja().getNome() + " - " + "Livro - " + historico.get(i).getProduto().getNome()+" "+qtdHistorico.get(i)+"x");
-            } else if (historico.get(i).getProduto() instanceof Eletronico) {
-                System.out.println(historico.get(i).getLoja().getNome() + " - " + "Eletronico - " + historico.get(i).getProduto().getNome()+" "+qtdHistorico.get(i)+"x");
-            } else if (historico.get(i).getProduto() instanceof ItemCasa) {
-                System.out.println(historico.get(i).getLoja().getNome() + " - " + "ItemCasa - " + historico.get(i).getProduto().getNome()+" "+qtdHistorico.get(i)+"x");
-            }
-
-        }
-        System.out.println("=========================================");
+    public void displayHistorico(){
+        listaHistorico.setModel(dlm);
+        this.show();
     }
-
+    
     public void addHistorico(int qtd, Item item) {
         historico.add(item);
         qtdHistorico.add(qtd);
-        
-        dlm.addElement(item.toString());
-        listaHistorico.setModel(dlm);
+        String tipo = "";
+        if(item.getProduto() instanceof Livro){
+            tipo = "Livro";
+        }
+        else if(item.getProduto() instanceof Eletronico){
+            tipo = "Eletronico";
+        }
+        else if(item.getProduto() instanceof ItemCasa){
+            tipo = "ItemCasa";
+        }
+        dlm.addElement(item.getLoja().getNome()+": "+tipo+" - "+item.getProduto().getNome()+" "+qtd+"x");
     }
 
     /**
@@ -71,7 +69,7 @@ public class HistoricoCompra extends javax.swing.JFrame {
         jScrollPane1.setViewportView(listaHistorico);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Historico de compra");
+        jLabel1.setText("Historico de compras");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

@@ -2,10 +2,11 @@ package Model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Item implements Serializable{
+public class Item implements Serializable, Comparator<Item>{
     private static final long serialVerionUID = 1L;
     private Produto produto;
     private Loja loja;
@@ -66,5 +67,12 @@ public class Item implements Serializable{
                 " - R$"+this.getValor()+
                 " - "+this.getQuantidade()+" un.";
     }
+
+    @Override
+    public int compare(Item o1, Item o2) {
+        return o1.getValor().intValue() - (int)o2.getValor().intValue();
+    }
+
+
 
 }

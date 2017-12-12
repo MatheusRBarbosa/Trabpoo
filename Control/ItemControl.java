@@ -12,7 +12,7 @@ import Model.Livro;
 import Model.Loja;
 import Model.Produto;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +21,8 @@ import java.util.Map;
  *
  * @author mathe
  */
-public class ItemControl {
-
+public class ItemControl{
+    
     Map<Integer, ArrayList<Item>> itens = new HashMap<>();
     Item item;
     LojaControl lojaControl = new LojaControl();
@@ -31,14 +31,12 @@ public class ItemControl {
 
     public void setItens(List<String> produtos) {
 
-        lojaControl.sLoja();//ler no arquivo
-        Produto prod = null;
 
+        Produto prod = null;
         for (int i = 0; i < produtos.size(); i++) {
             dados = produtos.get(i).split(";");
 
             Loja loja = lojaControl.buscaLoja(dados[0]);
-
             int codigo = Integer.parseInt(dados[1]);
             String nome = dados[3];
 
@@ -58,9 +56,11 @@ public class ItemControl {
                     prod = new Livro(codigo, nome, dados[6], dados[7]);
                     break;
             }
+            
             double valor = Double.parseDouble(dados[5].replace(".", "").replace(',', '.'));
             int quantidade = Integer.parseInt(dados[4]);
             item = new Item(prod, loja, valor, quantidade);
+            
             prodItem.add(item);
             itens.put(codigo, prodItem);
         }
